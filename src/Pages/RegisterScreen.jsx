@@ -12,11 +12,10 @@ import {
   Platform,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { Linking } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -29,7 +28,7 @@ export default function LoginScreen() {
         {/* Welcome Message with Logo */}
         <View style={styles.welcomeContainer}>
           <Image
-            source={require("../Img/logo.png")} // Replace with your logo path
+            source={require("../Img/logo.png")} // logo path
             style={styles.logo}
             resizeMode="contain"
           />
@@ -38,20 +37,30 @@ export default function LoginScreen() {
 
         {/* Illustration */}
         <Image
-          source={require("../Img/login.png")}
+          source={require("../Img/signup.png")} //illustration
           style={styles.image}
           resizeMode="contain"
         />
 
-        {/* Login Title */}
-        <Text style={styles.title}>Login</Text>
+        {/* Sign-Up Title */}
+        <Text style={styles.title}>Sign Up</Text>
+
+        {/* Name Input */}
+        <View style={styles.inputContainer}>
+          <FontAwesome name="user" size={20} color="#999" />
+          <TextInput
+            style={styles.input}
+            placeholder="Name"
+            keyboardType="default"
+          />
+        </View>
 
         {/* Email Input */}
         <View style={styles.inputContainer}>
           <FontAwesome name="envelope" size={20} color="#999" />
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            placeholder="Email"
             keyboardType="email-address"
           />
         </View>
@@ -64,20 +73,27 @@ export default function LoginScreen() {
             placeholder="Password"
             secureTextEntry
           />
-          <TouchableOpacity>
-            <Text style={styles.forgotText}>Forgot?</Text>
-          </TouchableOpacity>
         </View>
 
-        {/* Login Button */}
+        {/* Confirm Password Input */}
+        <View style={styles.inputContainer}>
+          <FontAwesome name="lock" size={20} color="#999" />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            secureTextEntry
+          />
+        </View>
+
+        {/* Sign Up Button */}
         <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Login</Text>
+          <Text style={styles.loginButtonText}>Sign Up</Text>
         </TouchableOpacity>
 
         {/* Divider */}
-        <Text style={styles.orText}>Or, login with ...</Text>
+        <Text style={styles.orText}>Or, sign up with ...</Text>
 
-        {/* Social Login Buttons */}
+        {/* Social Sign-Up Buttons */}
         <View style={styles.socialButtons}>
           <TouchableOpacity
             style={styles.socialButton}
@@ -99,9 +115,9 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Register Text */}
+        {/* Login Text */}
         <Text style={styles.registerText}>
-          New to the app? <Text style={styles.registerLink}>Register</Text>
+          Already have an account? <Text style={styles.registerLink}>Login</Text>
         </Text>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -121,11 +137,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-    marginTop: 40,
+    // marginTop: 10,
   },
   logo: {
-    width: 60, // Adjust logo size
-    height: 60, // Adjust logo size
+    width: 60,
+    height: 60,
     marginRight: 5,
   },
   welcomeText2: {
@@ -138,7 +154,7 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     height: height * 0.25,
     marginBottom: 20,
-    marginTop: 10,
+    // marginTop: 5,
   },
   title: {
     fontSize: 28,
@@ -151,19 +167,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 10,
-    paddingHorizontal: 50,
+    paddingHorizontal: 10, // Reduced padding
     paddingVertical: 8,
     marginBottom: 15,
     width: "100%",
   },
+  
   input: {
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
-  },
-  forgotText: {
-    color: "#8e44ad",
-    fontSize: 14,
   },
   loginButton: {
     backgroundColor: "#8e44ad",

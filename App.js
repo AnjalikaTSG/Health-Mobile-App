@@ -8,9 +8,9 @@ import RegisterScreen from './src/Pages/RegisterScreen'; // Import the RegisterS
 export default function App() {
   return (
     <View style={styles.container}>
-      {/*<FontScreen /> {/* Render the FontScreen component */}
+      <FontScreen /> {/* Render the FontScreen component */}
       {/*<LoginScreen /> {/* Render the LoginScreen component */}
-      <RegisterScreen /> {/* Render the RegisterScreen component */}
+      {/*<RegisterScreen /> {/* Render the RegisterScreen component */}
       <StatusBar style="auto" />
     </View>
   );

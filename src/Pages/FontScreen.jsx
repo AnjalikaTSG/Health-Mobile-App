@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';  // Import the useNavigation hook
+import { useNavigation } from '@react-navigation/native';
 
-const WelcomeScreen = (p) => {
-  const navigation = useNavigation(); // Access the navigation prop using the hook
+const FontScreen = () => {
+  const navigation = useNavigation(); // Access the navigation object
 
-  function GotoRegister() {
-    p.navigation.navigate('RegisterScreen');  // Use the hook to navigate
-  }
+  const GotoRegister = () => {
+    navigation.navigate('Register'); // Navigate to the RegisterScreen
+  };
 
   return (
     <View style={styles.container}>
@@ -20,10 +20,14 @@ const WelcomeScreen = (p) => {
       </Text>
 
       {/* Get Started Button */}
-      <TouchableOpacity style={styles.button} onPress={GotoRegister}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={GotoRegister}
+        accessibilityLabel="Get Started button"
+        accessibilityHint="Navigates to the Register Screen"
+      >
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
-
     </View>
   );
 };
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#7d4794',
     paddingHorizontal: 20,
-    marginTop:10,
+    marginTop: 10,
   },
   welcomeText2: {
     fontSize: 30,
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   logo: {
-    width: 200,  // Adjust the width
+    width: 200, // Adjust the width
     height: 200, // Adjust the height
     resizeMode: 'contain', // Ensures the image scales proportionally
   },
@@ -76,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeScreen;
+export default FontScreen;

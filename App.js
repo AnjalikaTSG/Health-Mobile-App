@@ -1,18 +1,24 @@
-// App.js
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import LoginScreen from './src/Pages/LoginScreen'; // Import the LoginScreen component
-import FontScreen from './src/Pages/FontScreen'; // Import the FontScreen component
-import RegisterScreen from './src/Pages/RegisterScreen'; // Import the RegisterScreen component
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import FontScreen from './src/Pages/FontScreen';
+import LoginScreen from './src/Pages/LoginScreen';
+import RegisterScreen from './src/Pages/RegisterScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <FontScreen /> {/* Render the FontScreen component */}
-      {/*<LoginScreen /> {/* Render the LoginScreen component */}
-      {/*<RegisterScreen /> {/* Render the RegisterScreen component */}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Screen name="FontScreen" component={FontScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 }
 

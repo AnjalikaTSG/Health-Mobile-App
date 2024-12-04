@@ -1,20 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';  // Import the useNavigation hook
 
-const WelcomeScreen = () => {
+const WelcomeScreen = (p) => {
+  const navigation = useNavigation(); // Access the navigation prop using the hook
+
+  function GotoRegister() {
+    p.navigation.navigate('RegisterScreen');  // Use the hook to navigate
+  }
+
   return (
-    
     <View style={styles.container}>
-        {/* Welcome Message */}
-        <Text style={styles.welcomeText}>Welcome to</Text>
-        <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
+      {/* Welcome Message */}
+      <Text style={styles.welcomeText}>Welcome to</Text>
+      <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
       <Image source={require('../Img/logo.png')} style={styles.logo} />
       <Text style={styles.subtitle}>
-      Empowering Wellness for a Better Tomorrow.
+        Empowering Wellness for a Better Tomorrow.
       </Text>
-      <TouchableOpacity style={styles.button}>
+
+      {/* Get Started Button */}
+      <TouchableOpacity style={styles.button} onPress={GotoRegister}>
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
+
     </View>
   );
 };

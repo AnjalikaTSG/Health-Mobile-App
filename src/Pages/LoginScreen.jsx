@@ -16,7 +16,14 @@ import { Linking } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
+  const handleLogin = () => {
+    // You can add validation logic here if necessary (e.g., check if inputs are filled)
+    
+    // Navigate to the Home screen after successful login
+    navigation.navigate("Home");
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -70,7 +77,7 @@ export default function LoginScreen() {
         </View>
 
         {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
@@ -101,7 +108,13 @@ export default function LoginScreen() {
 
         {/* Register Text */}
         <Text style={styles.registerText}>
-          New to the app? <Text style={styles.registerLink}>Register</Text>
+          New to the app?{" "}
+          <Text
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Register
+          </Text>
         </Text>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -111,21 +124,19 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#E7DDEB",
   },
   scrollContent: {
-    alignItems: "left",
+    alignItems: "center",
     paddingTop: 20,
   },
   welcomeContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
-    marginTop: 40,
   },
   logo: {
-    width: 60, // Adjust logo size
-    height: 60, // Adjust logo size
+    width: 60,
+    height: 50,
     marginRight: 5,
   },
   welcomeText2: {
@@ -144,22 +155,25 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 30,
+    color: "#4a4a4a",
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#8e44ad",
     borderRadius: 10,
-    paddingHorizontal: 50,
-    paddingVertical: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     marginBottom: 15,
-    width: "100%",
+    width: "90%",
+    backgroundColor: "#E7DDEB",
   },
   input: {
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
+    color: "#333",
   },
   forgotText: {
     color: "#8e44ad",
@@ -169,7 +183,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#8e44ad",
     borderRadius: 10,
     paddingVertical: 12,
-    width: "100%",
+    width: "90%",
     alignItems: "center",
     marginVertical: 15,
   },
@@ -186,20 +200,20 @@ const styles = StyleSheet.create({
   socialButtons: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "80%",
+    width: "70%",
     marginVertical: 10,
   },
   socialButton: {
     backgroundColor: "#f5f5f5",
-    padding: 12,
+    padding: 15,
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
   registerText: {
-    marginTop: 20,
     fontSize: 16,
     color: "#999",
+    marginBottom: 20,
   },
   registerLink: {
     color: "#8e44ad",

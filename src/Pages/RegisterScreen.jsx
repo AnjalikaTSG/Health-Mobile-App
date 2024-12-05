@@ -16,12 +16,14 @@ import { FontAwesome } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
-export default function RegisterScreen() {
+export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const validateInputs = () => {
     let valid = true;
@@ -35,7 +37,7 @@ export default function RegisterScreen() {
     if (!email.trim()) {
       newErrors.email = "Email is required.";
       valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(email) || email !== email.toLowerCase()) {
       newErrors.email = "Enter a valid email.";
       valid = false;
     }
@@ -76,6 +78,7 @@ export default function RegisterScreen() {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.welcomeContainer}>
           <Image
@@ -124,8 +127,15 @@ export default function RegisterScreen() {
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={!passwordVisible}
           />
+          <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+            <FontAwesome
+              name={passwordVisible ? "eye" : "eye-slash"}
+              size={20}
+              color="#999"
+            />
+          </TouchableOpacity>
         </View>
         {errors.password && (
           <Text style={styles.errorText}>{errors.password}</Text>
@@ -138,8 +148,17 @@ export default function RegisterScreen() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-            secureTextEntry
+            secureTextEntry={!confirmPasswordVisible}
           />
+          <TouchableOpacity
+            onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+          >
+            <FontAwesome
+              name={confirmPasswordVisible ? "eye" : "eye-slash"}
+              size={20}
+              color="#999"
+            />
+          </TouchableOpacity>
         </View>
         {errors.confirmPassword && (
           <Text style={styles.errorText}>{errors.confirmPassword}</Text>
@@ -164,7 +183,13 @@ export default function RegisterScreen() {
         </View>
 
         <Text style={styles.registerText}>
-          Already have an account? <Text style={styles.registerLink}>Login</Text>
+          Already have an account?{" "}
+          <Text
+            style={styles.registerLink}
+            onPress={() => navigation.navigate("Login")}
+          >
+            Login
+          </Text>
         </Text>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -174,20 +199,18 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#E7DDEB",
   },
   scrollContent: {
     alignItems: "center",
-    paddingTop: 20,
   },
   welcomeContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
   },
   logo: {
     width: 60,
-    height: 60,
+    height: 50,
     marginRight: 5,
   },
   welcomeText2: {
@@ -198,7 +221,6 @@ const styles = StyleSheet.create({
   image: {
     width: width * 0.7,
     height: height * 0.25,
-    marginBottom: 20,
   },
   title: {
     fontSize: 28,
@@ -209,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#8e44ad",
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
@@ -223,44 +245,43 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    fontSize: 14,
-    marginBottom: 10,
+    fontSize: 12,
   },
   loginButton: {
     backgroundColor: "#8e44ad",
-    borderRadius: 10,
     paddingVertical: 12,
     width: "90%",
-    alignItems: "center",
-    marginVertical: 15,
+    marginBottom: 10,
+    borderRadius: 10,
   },
   loginButtonText: {
     color: "#fff",
     fontSize: 18,
-    fontWeight: "bold",
+    textAlign: "center",
   },
   orText: {
-    fontSize: 16,
-    color: "#999",
-    marginVertical: 10,
+    fontSize: 14,
+    textAlign: "center",
+    marginBottom: 10,
   },
   socialButtons: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    width: "80%",
-    marginVertical: 10,
+    justifyContent: "center",
+    marginBottom: 20,
   },
   socialButton: {
-    backgroundColor: "#f5f5f5",
-    padding: 12,
+    marginHorizontal: 10,
+    padding: 10,
     borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   registerText: {
-    marginTop: 20,
-    fontSize: 16,
-    color: "#999",
+    fontSize: 14,
+    textAlign: "center",
   },
   registerLink: {
     color: "#8e44ad",

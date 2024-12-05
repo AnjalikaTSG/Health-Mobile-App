@@ -7,20 +7,23 @@ import FontScreen from './src/Pages/FontScreen';
 import LoginScreen from './src/Pages/LoginScreen';
 import RegisterScreen from './src/Pages/RegisterScreen';
 import HomeScreen from './src/Pages/HomeScreen';
+import { ClickCountProvider } from './src/Pages/ClickCountProvider';  
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="FontScreen">
-        <Stack.Screen name="FontScreen" component={FontScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+    <ClickCountProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="FontScreen">
+          <Stack.Screen name="FontScreen" component={FontScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
       <StatusBar style="auto" />
-    </NavigationContainer>
+    </ClickCountProvider>
   );
 }
 

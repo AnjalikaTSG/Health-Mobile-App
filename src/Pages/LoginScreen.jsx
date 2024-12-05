@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,11 +17,23 @@ import { Linking } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export default function LoginScreen({ navigation }) {
+  const [username, setUsername] = useState(""); // State for username
+  const [password, setPassword] = useState(""); // State for password
+  const [error, setError] = useState(""); // State for error message
+  const [isPasswordVisible, setPasswordVisible] = useState(false); // State for password visibility
+
   const handleLogin = () => {
-    // You can add validation logic here if necessary (e.g., check if inputs are filled)
-    
-    // Navigate to the Home screen after successful login
-    navigation.navigate("Home");
+    if (!username || !password) {
+      setError("Please fill in both username and password.");
+      return;
+    }
+    setError(""); // Clear error if both fields are filled
+
+    // Clear input fields
+    setUsername("");
+    setPassword("");
+
+    navigation.navigate("Home",{username}); // Navigate to Home
   };
 
   return (
@@ -53,13 +65,18 @@ export default function LoginScreen({ navigation }) {
         {/* Login Title */}
         <Text style={styles.title}>Login</Text>
 
-        {/* Email Input */}
+        {/* Error Message */}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+        {/* Username Input */}
         <View style={styles.inputContainer}>
           <FontAwesome name="envelope" size={20} color="#999" />
           <TextInput
             style={styles.input}
             placeholder="Username"
             keyboardType="email-address"
+            value={username}
+            onChangeText={setUsername} // Update username state
           />
         </View>
 
@@ -69,10 +86,18 @@ export default function LoginScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Password"
-            secureTextEntry
+            secureTextEntry={!isPasswordVisible} // Toggle password visibility
+            value={password}
+            onChangeText={setPassword} // Update password state
           />
-          <TouchableOpacity>
-            <Text style={styles.forgotText}>Forgot?</Text>
+          <TouchableOpacity
+            onPress={() => setPasswordVisible(!isPasswordVisible)} // Toggle visibility
+          >
+            <FontAwesome
+              name={isPasswordVisible ? "eye" : "eye-slash"} // Icon changes based on state
+              size={20}
+              color="#999"
+            />
           </TouchableOpacity>
         </View>
 
@@ -156,6 +181,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 30,
     color: "#4a4a4a",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
+    fontSize: 14,
   },
   inputContainer: {
     flexDirection: "row",

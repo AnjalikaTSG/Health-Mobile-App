@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
     marginBottom: 10,
-    color: '#4a4a4a',
+    color: '#8e44ad',
   },
   header: {
     fontSize: 24,

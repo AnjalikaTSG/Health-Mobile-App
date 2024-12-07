@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import ItemCard from './ItemCard'; // Make sure this component displays item details
 import FloatingButton from './FloatingButton';
 
-const HomeScreen = () => {
+const HomeScreen = ({ route }) => {
+  const { username } = route.params; // Receive username from navigation
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -26,6 +27,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Display username at the top */}
+      <Text style={styles.welcomeText}>Welcome, {username}!</Text>
       <Text style={styles.header}>Item List</Text>
       <ScrollView contentContainerStyle={styles.cardContainer}>
         {items.length === 0 ? (
@@ -47,11 +50,17 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#E7DDEB',
   },
+  welcomeText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: '#4a4a4a',
+  },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    // marginVertical: 20,
     marginBottom: 10,
   },
   cardContainer: {

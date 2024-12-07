@@ -61,12 +61,13 @@ export default function RegisterScreen({ navigation }) {
 
   const handleSignUp = () => {
     if (validateInputs()) {
-      Alert.alert("Success", "You have signed up successfully!");
       setName("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       setErrors({});
+      // Navigate to Registration Success Page
+      navigation.navigate("RegisterSuccess");
     }
   };
 
@@ -80,6 +81,7 @@ export default function RegisterScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
+        {/* Logo Section */}
         <View style={styles.welcomeContainer}>
           <Image
             source={require("../Img/logo.png")}
@@ -97,6 +99,7 @@ export default function RegisterScreen({ navigation }) {
 
         <Text style={styles.title}>Sign Up</Text>
 
+        {/* Input Fields */}
         <View style={styles.inputContainer}>
           <FontAwesome name="user" size={20} color="#999" />
           <TextInput
@@ -164,12 +167,14 @@ export default function RegisterScreen({ navigation }) {
           <Text style={styles.errorText}>{errors.confirmPassword}</Text>
         )}
 
+        {/* Sign Up Button */}
         <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
           <Text style={styles.loginButtonText}>Sign Up</Text>
         </TouchableOpacity>
 
         <Text style={styles.orText}>Or, sign up with ...</Text>
 
+        {/* Social Media Buttons */}
         <View style={styles.socialButtons}>
           <TouchableOpacity style={styles.socialButton}>
             <FontAwesome name="google" size={28} color="#DB4437" />
@@ -195,6 +200,7 @@ export default function RegisterScreen({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -8,6 +8,7 @@ import LoginScreen from './src/Pages/LoginScreen';
 import RegisterScreen from './src/Pages/RegisterScreen';
 import HomeScreen from './src/Pages/HomeScreen';
 import { ClickCountProvider } from './src/Pages/ClickCountProvider';  
+import RegisterSuccess from './src/Pages/RegisterSuccess';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="RegisterSuccess" component={RegisterSuccess} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

@@ -1,12 +1,25 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const FontScreen = () => {
   const navigation = useNavigation(); // Access the navigation object
+  const [isLoading, setIsLoading] = useState(false); // State to handle loading state
+  const [buttonPosition] = useState(new Animated.Value(0)); // Animated value for button position
 
   const GotoRegister = () => {
-    navigation.navigate('Register'); // Navigate to the RegisterScreen
+    setIsLoading(true); // Start the loading process
+
+    // Animate the button to move upward (simulating rocket effect)
+    Animated.timing(buttonPosition, {
+      toValue: -100, // Move the button up by 100 units
+      duration: 1500, // Duration of the animation
+      useNativeDriver: true, // Use native driver for smoother animation
+    }).start();
+
+    setTimeout(() => {
+      navigation.navigate('Register'); // Navigate to the RegisterScreen after a delay
+    }, 2000); // 2 seconds delay (intermission effect)
   };
 
   return (
@@ -19,15 +32,21 @@ const FontScreen = () => {
         Empowering Wellness for a Better Tomorrow.
       </Text>
 
-      {/* Get Started Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={GotoRegister}
-        accessibilityLabel="Get Started button"
-        accessibilityHint="Navigates to the Register Screen"
-      >
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
+      {/* Show loading spinner during the intermission */}
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#7d4794" style={styles.loadingIndicator} />
+      ) : (
+        <Animated.View style={[styles.buttonContainer, { transform: [{ translateY: buttonPosition }] }]}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={GotoRegister}
+            accessibilityLabel="Get Started button"
+            accessibilityHint="Navigates to the Register Screen"
+          >
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -66,8 +85,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 16,
   },
-  button: {
+  buttonContainer: {
     marginTop: 20,
+  },
+  button: {
     backgroundColor: '#7d4794',
     paddingVertical: 12,
     paddingHorizontal: 130,
@@ -77,6 +98,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  loadingIndicator: {
+    marginTop: 20,
   },
 });
 

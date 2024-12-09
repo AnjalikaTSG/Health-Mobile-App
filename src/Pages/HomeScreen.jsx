@@ -6,24 +6,34 @@ import FloatingButton from './FloatingButton';
 const HomeScreen = ({ route }) => {
   const { username } = route.params; // Receive username from navigation
   const [items, setItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]); // Track selected items
 
   useEffect(() => {
     // Fetch items from the API
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // Format the data to include placeholder images and static status
-        const formattedItems = data.map(item => ({
+        const formattedItems = data.map((item) => ({
           ...item,
           imageUrl: 'https://via.placeholder.com/150', // Placeholder image
           status: 'Available', // Static status
         }));
         setItems(formattedItems);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
+
+  // Toggle item selection
+  const toggleSelectItem = (itemId) => {
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(itemId)
+        ? prevSelected.filter((id) => id !== itemId) // Remove if already selected
+        : [...prevSelected, itemId] // Add if not selected
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -42,18 +52,27 @@ const HomeScreen = ({ route }) => {
         <Text style={styles.welcomeText}>Welcome,</Text>
         <Text style={styles.usernameText}>{username}!</Text>
       </View>
-      
+
       <Text style={styles.header}>Item List</Text>
       <ScrollView contentContainerStyle={styles.cardContainer}>
         {items.length === 0 ? (
           <Text>No items available.</Text> // Show a message when there are no items
         ) : (
-          items.map(item => (
-            <ItemCard key={item.id} item={item} />
+          items.map((item) => (
+            <ItemCard
+              key={item.id}
+              item={item}
+              isSelected={selectedItems.includes(item.id)} // Pass selection state
+              onToggleSelect={toggleSelectItem} // Pass toggle function
+            />
           ))
         )}
       </ScrollView>
-      <FloatingButton />
+      <FloatingButton
+        onPress={() => {
+          console.log('Selected Items:', selectedItems);
+        }}
+      />
     </View>
   );
 };
@@ -88,8 +107,8 @@ const styles = StyleSheet.create({
   },
   welcomeText2: {
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#8e44ad",
+    fontWeight: 'bold',
+    color: '#8e44ad',
   },
   header: {
     fontSize: 24,
@@ -107,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Vertically center the texts within the row
     justifyContent: 'flex-start', // Align the texts to the left without extra space between them
     marginBottom: 10,
-  }
+  },
 });
 
 export default HomeScreen;

@@ -45,7 +45,7 @@ const HomeScreen = ({ route }) => {
         <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
       </View>
       <View style={styles.welcomeRow}>
-        <Text style={styles.welcomeText}>HI,</Text>
+        <Text style={styles.welcomeText}>Welcome,</Text>
         <Text style={styles.usernameText}>{username}!</Text>
       </View>
       <Text style={styles.header}>Item List</Text>

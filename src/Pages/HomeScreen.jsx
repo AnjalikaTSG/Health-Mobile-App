@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
-import ItemCard from './ItemCard'; // Make sure this component displays item details
-import FloatingButton from './FloatingButton';
+import ItemCard from './ItemCard'; // Component to display individual item details
+import FloatingButton from './FloatingButton'; // Floating button to show selected count
 
 const HomeScreen = ({ route }) => {
   const { username } = route.params; // Receive username from navigation
@@ -63,16 +63,21 @@ const HomeScreen = ({ route }) => {
               key={item.id}
               item={item}
               isSelected={selectedItems.includes(item.id)} // Pass selection state
-              onToggleSelect={toggleSelectItem} // Pass toggle function
+              onToggleSelect={() => toggleSelectItem(item.id)} // Pass toggle function
             />
           ))
         )}
       </ScrollView>
-      <FloatingButton
-        onPress={() => {
-          console.log('Selected Items:', selectedItems);
-        }}
-      />
+
+      {/* Floating Button - Show only when items are selected */}
+      {selectedItems.length > 0 && (
+        <FloatingButton
+          count={selectedItems.length}
+          onPress={() => {
+            console.log('Selected Items:', selectedItems);
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
   welcomeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', // Center horizontally
+    justifyContent: 'center',
     marginBottom: 10,
   },
   logo: {
@@ -97,13 +102,13 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2c3e50', // Purple color for welcome text
-    marginRight: 5, // Add margin to create some space between the texts
+    color: '#2c3e50',
+    marginRight: 5,
   },
   usernameText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#8e44ad', // Darker color for username text
+    color: '#8e44ad',
   },
   welcomeText2: {
     fontSize: 18,
@@ -123,8 +128,7 @@ const styles = StyleSheet.create({
   },
   welcomeRow: {
     flexDirection: 'row',
-    alignItems: 'center', // Vertically center the texts within the row
-    justifyContent: 'flex-start', // Align the texts to the left without extra space between them
+    alignItems: 'center',
     marginBottom: 10,
   },
 });

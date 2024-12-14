@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const FloatingButton = ({ count }) => {
+const FloatingButton = ({ count, onPress }) => {
   return (
-    <TouchableOpacity style={styles.floatingButton}>
+    <TouchableOpacity style={styles.floatingButton} onPress={onPress}>
       <Text style={styles.buttonText}>Selected: {count}</Text>
     </TouchableOpacity>
   );

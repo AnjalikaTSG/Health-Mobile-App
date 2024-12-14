@@ -1,123 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
-import FloatingButton from './FloatingButton';
-import ItemCard from './ItemCard';
+import React from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-const HomeScreen = ({ route }) => {
-  const { username } = route.params; // Receive username from navigation
-  const [items, setItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]); // Track selected items
-
-  useEffect(() => {
-    // Fetch items from the API
-    fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')
-      .then((response) => response.json())
-      .then((data) => {
-        // Format the data to include placeholder images and static status
-        const formattedItems = data.map((item) => ({
-          ...item,
-          imageUrl: 'https://via.placeholder.com/150', // Placeholder image
-        }));
-        setItems(formattedItems);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
-  // Toggle item selection
-  const toggleSelectItem = (itemId) => {
-    setSelectedItems((prevSelected) =>
-      prevSelected.includes(itemId)
-        ? prevSelected.filter((id) => id !== itemId) // Remove if already selected
-        : [...prevSelected, itemId] // Add if not selected
-    );
-  };
-
+const ItemCard = ({ item, isSelected, onToggleSelect }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.welcomeContainer}>
-        <Image
-          source={require('../Img/logo.png')} // Replace with your logo path
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
+    <TouchableOpacity
+      style={[styles.card, isSelected ? styles.selectedCard : null]}
+      onPress={() => onToggleSelect(item.id)} // Toggle selection on press
+    >
+      <Image
+        source={{ uri: item.imageUrl }}
+        style={styles.image}
+        resizeMode="cover"
+      />
+      <View style={styles.cardContent}>
+        <Text style={styles.title}>{item.hospital_name || 'Unknown Hospital'}</Text>
+        <Text style={styles.status}>{isSelected ? 'Selected' : 'Available'}</Text>
+        <Text style={styles.description}>
+          {item.city ? `City: ${item.city}` : 'No city available'}
+        </Text>
       </View>
-      <View style={styles.welcomeRow}>
-        <Text style={styles.welcomeText}>Welcome,</Text>
-        <Text style={styles.usernameText}>{username}!</Text>
-      </View>
-      <Text style={styles.header}>Item List</Text>
-      <ScrollView contentContainerStyle={styles.cardContainer}>
-        {items.length === 0 ? (
-          <Text>No items available.</Text>
-        ) : (
-          items.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              isSelected={selectedItems.includes(item.id)} // Pass selection state
-              onToggleSelect={toggleSelectItem} // Pass toggle function
-            />
-          ))
-        )}
-      </ScrollView>
-      <FloatingButton count={selectedItems.length} /> {/* Pass selected count */}
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#E7DDEB',
+  card: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginBottom: 15,
+    elevation: 3, // Add shadow for Android
+    shadowColor: '#000', // Add shadow for iOS
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
   },
-  welcomeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
+  selectedCard: {
+    borderWidth: 2,
+    borderColor: '#8e44ad',
   },
-  logo: {
-    width: 50,
-    height: 60,
-    marginRight: 5,
+  image: {
+    width: '100%',
+    height: 100,
   },
-  welcomeText: {
-    fontSize: 20,
+  cardContent: {
+    padding: 10,
+  },
+  title: {
+    fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5,
     color: '#2c3e50',
-    marginRight: 5,
   },
-  usernameText: {
-    fontSize: 20,
+  status: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#8e44ad',
+    marginBottom: 5,
   },
-  welcomeText2: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#8e44ad',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  welcomeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
+  description: {
+    fontSize: 12,
+    color: '#7f8c8d',
   },
 });
 
-export default HomeScreen;
+export default ItemCard;

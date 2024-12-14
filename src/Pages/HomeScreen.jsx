@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
-import ItemCard from './ItemCard'; // Component to display individual item details
-import FloatingButton from './FloatingButton'; // Floating button to show selected count
+import ItemCard from './ItemCard';
+import FloatingButton from './FloatingButton';
 
 const HomeScreen = ({ route }) => {
   const { username } = route.params; // Receive username from navigation
@@ -14,7 +14,8 @@ const HomeScreen = ({ route }) => {
       .then((response) => response.json())
       .then((data) => {
         // Format the data to include placeholder images and static status
-        const formattedItems = data.map((item) => ({
+        const formattedItems = data.map((item, index) => ({
+          id: index, // Assign a unique id
           ...item,
           imageUrl: 'https://via.placeholder.com/150', // Placeholder image
           status: 'Available', // Static status
@@ -68,8 +69,6 @@ const HomeScreen = ({ route }) => {
           ))
         )}
       </ScrollView>
-
-      {/* Floating Button - Show only when items are selected */}
       {selectedItems.length > 0 && (
         <FloatingButton
           count={selectedItems.length}

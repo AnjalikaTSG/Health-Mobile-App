@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 const ItemCard = ({ item, isSelected, onToggleSelect }) => {
   return (
     <TouchableOpacity
-      style={[styles.card, isSelected ? styles.selectedCard : null]}
+      style={[styles.card, isSelected ? styles.selectedCard : null]} 
       onPress={() => onToggleSelect(item.id)} // Toggle selection on press
     >
       <Image
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
+    marginRight: '2%', // Ensure there’s spacing between cards when wrapping
   },
   selectedCard: {
     borderWidth: 2,
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 100,
+    borderRadius: 8,
   },
   cardContent: {
     padding: 10,

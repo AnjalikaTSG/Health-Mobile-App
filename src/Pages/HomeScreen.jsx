@@ -9,15 +9,25 @@ const HomeScreen = ({ route }) => {
   const [selectedItems, setSelectedItems] = useState([]); // Track selected items
 
   useEffect(() => {
+    // Array of random hospital image URLs
+    const hospitalImages = [
+      'https://via.placeholder.com/150/FF5733', // Replace these with actual hospital image URLs
+      'https://via.placeholder.com/150/33FF57',
+      'https://via.placeholder.com/150/3357FF',
+      'https://via.placeholder.com/150/FF33A1',
+      'https://via.placeholder.com/150/A1FF33',
+      'https://via.placeholder.com/150/33A1FF',
+    ];
+
     // Fetch items from the API
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')
       .then((response) => response.json())
       .then((data) => {
-        // Format the data to include placeholder images and static status
+        // Format the data to include random images and static status
         const formattedItems = data.map((item, index) => ({
           id: index, // Assign a unique id
           ...item,
-          imageUrl: 'https://via.placeholder.com/150', // Placeholder image
+          imageUrl: hospitalImages[Math.floor(Math.random() * hospitalImages.length)], // Assign random image
           status: 'Available', // Static status
         }));
         setItems(formattedItems);

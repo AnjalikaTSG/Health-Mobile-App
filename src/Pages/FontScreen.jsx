@@ -1,6 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  Animated,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
 
 const FontScreen = () => {
   const navigation = useNavigation(); // Access the navigation object
@@ -18,7 +27,7 @@ const FontScreen = () => {
     }).start();
 
     setTimeout(() => {
-      navigation.navigate('Register'); // Navigate to the RegisterScreen after a delay
+      navigation.navigate("Register"); // Navigate to the RegisterScreen after a delay
     }, 2000); // 2 seconds delay (intermission effect)
   };
 
@@ -27,16 +36,33 @@ const FontScreen = () => {
       {/* Welcome Message */}
       <Text style={styles.welcomeText}>Welcome to</Text>
       <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
-      <Image source={require('../Img/logo.png')} style={styles.logo} />
+      <LottieView
+        source={require("../Animation/Animation - search.json")}
+        autoPlay
+        loop={true}
+        style={{
+          height: 300,
+          width: 300,
+        }}
+      />
       <Text style={styles.subtitle}>
         Empowering Wellness for a Better Tomorrow.
       </Text>
 
       {/* Show loading spinner during the intermission */}
       {isLoading ? (
-        <ActivityIndicator size="large" color="#7d4794" style={styles.loadingIndicator} />
+        <ActivityIndicator
+          size="large"
+          color="#7d4794"
+          style={styles.loadingIndicator}
+        />
       ) : (
-        <Animated.View style={[styles.buttonContainer, { transform: [{ translateY: buttonPosition }] }]}>
+        <Animated.View
+          style={[
+            styles.buttonContainer,
+            { transform: [{ translateY: buttonPosition }] },
+          ]}
+        >
           <TouchableOpacity
             style={styles.button}
             onPress={GotoRegister}
@@ -54,34 +80,34 @@ const FontScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E7DDEB',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E7DDEB",
   },
   welcomeText: {
     fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#7d4794',
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#7d4794",
     paddingHorizontal: 20,
     marginTop: 10,
   },
   welcomeText2: {
     fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#8e44ad',
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#8e44ad",
     marginBottom: 20,
     paddingHorizontal: 20,
   },
   logo: {
     width: 200, // Adjust the width
     height: 200, // Adjust the height
-    resizeMode: 'contain', // Ensures the image scales proportionally
+    resizeMode: "contain", // Ensures the image scales proportionally
   },
   subtitle: {
-    color: '#aaa',
-    textAlign: 'center',
+    color: "#aaa",
+    textAlign: "center",
     marginVertical: 10,
     fontSize: 16,
   },
@@ -89,15 +115,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: '#7d4794',
+    backgroundColor: "#7d4794",
     paddingVertical: 12,
     paddingHorizontal: 130,
     borderRadius: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   loadingIndicator: {
     marginTop: 20,

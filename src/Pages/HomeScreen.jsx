@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native';
+import LottieView from 'lottie-react-native';
 import ItemCard from './ItemCard';
 import FloatingButton from './FloatingButton';
 
 const HomeScreen = ({ route }) => {
-  const { username } = route.params; // Receive username from navigation
+  const { username } = route.params;
   const [items, setItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]); // Track selected items
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isAnimationFinished, setIsAnimationFinished] = useState(false);
 
   useEffect(() => {
-    // Array of random hospital image URLs
+    const timer = setTimeout(() => {
+      setIsAnimationFinished(true);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const hospitalImages = [
-      'https://via.placeholder.com/150/FF5733', // Replace these with actual hospital image URLs
+      'https://via.placeholder.com/150/FF5733',
       'https://via.placeholder.com/150/33FF57',
       'https://via.placeholder.com/150/3357FF',
       'https://via.placeholder.com/150/FF33A1',
@@ -19,16 +28,14 @@ const HomeScreen = ({ route }) => {
       'https://via.placeholder.com/150/33A1FF',
     ];
 
-    // Fetch items from the API
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')
       .then((response) => response.json())
       .then((data) => {
-        // Format the data to include random images and static status
         const formattedItems = data.map((item, index) => ({
-          id: index, // Assign a unique id
+          id: index,
           ...item,
-          imageUrl: hospitalImages[Math.floor(Math.random() * hospitalImages.length)], // Assign random image
-          status: 'Available', // Static status
+          imageUrl: hospitalImages[Math.floor(Math.random() * hospitalImages.length)],
+          status: 'Available',
         }));
         setItems(formattedItems);
       })
@@ -37,55 +44,72 @@ const HomeScreen = ({ route }) => {
       });
   }, []);
 
-  // Toggle item selection
   const toggleSelectItem = (itemId) => {
     setSelectedItems((prevSelected) =>
       prevSelected.includes(itemId)
-        ? prevSelected.filter((id) => id !== itemId) // Remove if already selected
-        : [...prevSelected, itemId] // Add if not selected
+        ? prevSelected.filter((id) => id !== itemId)
+        : [...prevSelected, itemId]
     );
   };
 
   return (
     <View style={styles.container}>
-      {/* Welcome Container */}
-      <View style={styles.welcomeContainer}>
-        <Image
-          source={require('../Img/logo.png')} // Replace with your logo path
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
-      </View>
-
-      {/* Welcome and Username in one row */}
-      <View style={styles.welcomeRow}>
-        <Text style={styles.welcomeText}>Welcome,</Text>
-        <Text style={styles.usernameText}>{username}!</Text>
-      </View>
-
-      <Text style={styles.header}>Item List</Text>
-      <ScrollView contentContainerStyle={styles.cardContainer}>
-        {items.length === 0 ? (
-          <Text>No items available.</Text> // Show a message when there are no items
-        ) : (
-          items.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              isSelected={selectedItems.includes(item.id)} // Pass selection state
-              onToggleSelect={() => toggleSelectItem(item.id)} // Pass toggle function
+      {!isAnimationFinished ? (
+        <View style={styles.loadingContainer}>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require('../Img/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
             />
-          ))
-        )}
-      </ScrollView>
-      {selectedItems.length > 0 && (
-        <FloatingButton
-          count={selectedItems.length}
-          onPress={() => {
-            console.log('Selected Items:', selectedItems);
-          }}
-        />
+            <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
+          </View>
+          <LottieView
+            source={require('../Animation/Animation - heart.json')}
+            autoPlay
+            loop={false}
+            style={{ width: 350, height: 350 }}
+          />
+          <Text style={styles.loadingText}>Loading your experience...</Text>
+        </View>
+      ) : (
+        <>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require('../Img/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            <Text style={styles.welcomeText2}>Family Care Channeling Center</Text>
+          </View>
+          <View style={styles.welcomeRow}>
+            <Text style={styles.welcomeText}>Welcome,</Text>
+            <Text style={styles.usernameText}>{username}!</Text>
+          </View>
+          <Text style={styles.header}>Item List</Text>
+          <ScrollView contentContainerStyle={styles.cardContainer}>
+            {items.length === 0 ? (
+              <Text>No items available.</Text>
+            ) : (
+              items.map((item) => (
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  isSelected={selectedItems.includes(item.id)}
+                  onToggleSelect={() => toggleSelectItem(item.id)}
+                />
+              ))
+            )}
+          </ScrollView>
+          {selectedItems.length > 0 && (
+            <FloatingButton
+              count={selectedItems.length}
+              onPress={() => {
+                console.log('Selected Items:', selectedItems);
+              }}
+            />
+          )}
+        </>
       )}
     </View>
   );
@@ -96,6 +120,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#E7DDEB',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#8e44ad',
+    fontWeight: 'bold',
   },
   welcomeContainer: {
     flexDirection: 'row',

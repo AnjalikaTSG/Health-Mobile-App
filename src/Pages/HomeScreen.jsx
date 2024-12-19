@@ -20,12 +20,12 @@ const HomeScreen = ({ route }) => {
 
   useEffect(() => {
     const hospitalImages = [
-      'https://via.placeholder.com/150/FF5733',
-      'https://via.placeholder.com/150/33FF57',
-      'https://via.placeholder.com/150/3357FF',
-      'https://via.placeholder.com/150/FF33A1',
-      'https://via.placeholder.com/150/A1FF33',
-      'https://via.placeholder.com/150/33A1FF',
+      'https://images.app.goo.gl/ox3MpCM5RpAGbzKx9',
+      'https://images.app.goo.gl/WCfRbNaRt7jPE3y36',
+      'https://images.app.goo.gl/mZTec44ZK4oBj3Eg9',
+      'https://images.app.goo.gl/vmvPHAEmjmpTR2ut5',
+      'https://images.app.goo.gl/fHk3yy3XxWCMkEvp9',
+      'https://images.app.goo.gl/w65rPvnDrv3axW1p6',
     ];
 
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')

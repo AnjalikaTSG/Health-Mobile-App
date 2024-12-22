@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import the FontAwesome icons
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ItemCard = ({ item, isSelected, onToggleSelect }) => {
   return (
     <TouchableOpacity
       style={[styles.card, isSelected ? styles.selectedCard : null]} 
-      onPress={() => onToggleSelect(item.id)} // Toggle selection on press
+      onPress={() => onToggleSelect(item.id)} 
     >
       <Image
-        source={{ uri: item.imageUrl }}
+        source={item.imageUrl}  // Use the local image URL directly
         style={styles.image}
         resizeMode="cover"
       />
@@ -21,7 +21,6 @@ const ItemCard = ({ item, isSelected, onToggleSelect }) => {
         </Text>
       </View>
 
-      {/* Tick icon inside a small box, only visible if the card is selected */}
       {isSelected && (
         <View style={styles.tickContainer}>
           <Icon name="check" size={20} color="#fff" />
@@ -38,12 +37,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     marginBottom: 15,
-    elevation: 3, // Add shadow for Android
-    shadowColor: '#000', // Add shadow for iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
-    marginRight: '2%', // Ensure there’s spacing between cards when wrapping
+    marginRight: '2%',
   },
   selectedCard: {
     borderWidth: 2,
@@ -77,13 +76,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: '#8e44ad', // Box color
+    backgroundColor: '#8e44ad',
     width: 30,
     height: 30,
-    borderRadius: 15, // Circle shape
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5, // Optional: Add shadow for a 3D effect
+    elevation: 5,
   },
 });
 

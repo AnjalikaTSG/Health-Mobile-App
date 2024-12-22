@@ -19,14 +19,15 @@ const HomeScreen = ({ route }) => {
   }, []);
 
   useEffect(() => {
-    const hospitalImages = [
-      'https://via.placeholder.com/150/0000FF/808080?text=Hospital+1',
-      'https://via.placeholder.com/150/FF0000/FFFFFF?text=Hospital+2',
-      'https://via.placeholder.com/150/00FF00/000000?text=Hospital+3',
-      'https://via.placeholder.com/150/FFFF00/000000?text=Hospital+4',
-      'https://via.placeholder.com/150/FF00FF/FFFFFF?text=Hospital+5',
-      'https://via.placeholder.com/150/00FFFF/000000?text=Hospital+6',
-    ];
+    // You can now manually require images for each item if needed
+    const hospitalImages = {
+      'Hospital 1': require('../Img/Hospital/Hospital1.jpg'),
+      'Hospital 2': require('../Img/Hospital/Hospital2.jpg'),
+      'Hospital 3': require('../Img/Hospital/Hospital3.jpeg'),
+      'Hospital 4': require('../Img/Hospital/Hospital4.jpg'),
+      'Hospital 5': require('../Img/Hospital/Hospital5.jpg'),
+      'Hospital 6': require('../Img/Hospital/Hospital6.jpeg'),
+    };
 
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')
       .then((response) => response.json())
@@ -34,7 +35,7 @@ const HomeScreen = ({ route }) => {
         const formattedItems = data.map((item, index) => ({
           id: index,
           ...item,
-          imageUrl: hospitalImages[Math.floor(Math.random() * hospitalImages.length)],
+          imageUrl: hospitalImages[`Hospital ${index + 1}`], // Use local images based on index
           status: 'Available',
         }));
         setItems(formattedItems);

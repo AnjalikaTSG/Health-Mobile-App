@@ -27,6 +27,11 @@ const HomeScreen = ({ route }) => {
       'Hospital 4': require('../Img/Hospital/Hospital4.jpg'),
       'Hospital 5': require('../Img/Hospital/Hospital5.jpg'),
       'Hospital 6': require('../Img/Hospital/Hospital6.jpeg'),
+      'Hospital 7': require('../Img/Hospital/Hospital7.jpeg'),
+      'Hospital 8': require('../Img/Hospital/Hospital8.jpg'),
+      'Hospital 9': require('../Img/Hospital/Hospital9.jpeg'),
+      'Hospital 10': require('../Img/Hospital/Hospital10.jpg'),
+      'Hospital 11': require('../Img/Hospital/Hospital11.jpeg'),
     };
 
     fetch('https://www.communitybenefitinsight.org/api/get_hospitals.php?state=NC')

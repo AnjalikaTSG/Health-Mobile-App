@@ -16,7 +16,7 @@ export default function App() {
   return (
     <ClickCountProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="FontScreen">
+        <Stack.Navigator initialRouteName="FontScreen" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="FontScreen" component={FontScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
